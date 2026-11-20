@@ -1,57 +1,103 @@
-# WebSocket Server for IoT Device Communication
+# Main IoT WebSocket Server
 
-This project implements a WebSocket server using Node.js, Express, and the `ws` (WebSocket) library. It facilitates real-time communication between IoT devices and web clients by managing device registrations, connections, and status updates.
+**Central WebSocket server for real-time communication between IoT devices and web clients, including device registration and status management.**
 
-## Features
-- **Device Management**: Registers IoT devices and keeps track of their status.
-- **Web Client Integration**: Allows web clients to monitor connected devices.
-- **Real-Time Communication**: Devices and web clients receive updates instantly.
-- **Automatic Device Synchronization**: Devices are dynamically added or removed based on their connection status.
+---
+
+## Project Overview
+
+This server acts as a hub for IoT devices (ESP32, sensors, cameras, locks, etc.) and browser-based dashboards. Devices connect, identify themselves, and exchange messages. Web clients receive live updates about connected devices and can send commands.
+
+It is designed as the backend communication layer for a multi-device IoT ecosystem.
+
+---
+
+## Key Features
+
+- Device registration and connection tracking
+- Real-time status updates (connect / disconnect)
+- Bidirectional messaging between devices and web clients
+- Dynamic list of active devices pushed to clients
+- Built with Node.js, Express and the `ws` library
+- Alternative Python implementation notes included
+
+---
 
 ## How It Works
-1. Devices connect to the WebSocket server and send identification data.
-2. Web clients connect and receive a list of active devices.
-3. Real-time updates are sent to web clients whenever devices connect/disconnect.
-4. Bidirectional communication enables devices and web clients to exchange messages.
 
-## Technologies Used
-- Node.js
-- Express.js
-- WebSocket (`ws` library)
-- Python (`websockets`, `asyncio`)
+1. An IoT device opens a WebSocket connection and sends identification data.
+2. The server registers the device and notifies connected web clients.
+3. Web clients receive the current list of active devices and live updates.
+4. Messages can flow in both directions (commands to devices, telemetry to dashboards).
 
-## Setup & Execution
+---
+
+## Technologies
+
+| Component     | Stack                          |
+|---------------|--------------------------------|
+| Runtime       | Node.js                        |
+| HTTP          | Express                        |
+| WebSocket     | `ws` library                   |
+| Alternative   | Python (`websockets` + asyncio)|
+
+---
+
+## Getting Started
+
 ### Prerequisites
-Ensure you have [Node.js](https://nodejs.org/) and Python installed on your system.
+- Node.js
 
-### Node.js WebSocket Server
-#### Install Dependencies
+### Installation & Run
+
 ```bash
-npm install express ws
+git clone https://github.com/Sfaxihoussem2/Main-server-.git
+cd Main-server-
+npm install express ws   # if not already present
+node mainserver.js
 ```
 
-#### Run the Server
-```bash
-node server.js
-```
+The server listens on the port defined in the code (commonly port 80 in the current implementation).
 
-The WebSocket server starts on port `80`, ready to handle connections.
+---
 
-### Python WebSocket Server
-#### Install Dependencies
-```bash
-pip install websockets asyncio
-```
+## Repository Contents
 
-#### Run the Server
-```bash
-python server.py
-```
+- `mainserver.js` — Main Node.js WebSocket + Express server
+- `README.md`
 
-The WebSocket server starts on port `80`, ready to handle connections.
+---
+
+## Integration Ideas
+
+This server can serve as the central nervous system for:
+- RFID access control events
+- ESP32-CAM streams (in coordination with the dedicated camera server)
+- Smart home device status
+- Sea Drone telemetry
+- Custom dashboards
+
+---
+
+## Future Improvements
+
+- Device authentication and authorization
+- Persistent device registry (database)
+- Topic / room based messaging (MQTT-like semantics over WebSocket)
+- Secure WebSocket (WSS) and HTTPS
+- Metrics and connection logging
+- Docker / process manager (PM2) deployment examples
+
+---
+
+## Author
+
+**Houssem Eddine Sfaxi**  
+Embedded Systems & IoT Engineer  
+[GitHub](https://github.com/Sfaxihoussem2) · [Portfolio](https://sfaxihoussem2.github.io/My-portfolio/) · [LinkedIn](https://www.linkedin.com/in/houssem-sfaxi-3272a9280)
+
+---
 
 ## License
-This project is licensed under the MIT License.
 
-## Contact
-For any inquiries or contributions, feel free to reach out.
+Portfolio and educational project.
